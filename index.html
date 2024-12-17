@@ -34,37 +34,37 @@
 
         .carousel {
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
             position: relative;
-            margin: 20px auto; /* Center on the page */
-            width: 90%; /* Adjust the width as needed */
-            max-width: 800px; /* Optional: Limit the max width */
-            height: auto; /* Allow dynamic height */
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+            height: auto;
         }
 
         .carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            align-items: center; /* Align videos vertically */
-        }
-        
-        .carousel-item video {
-            display: block;
-            max-width: 100%; /* Ensure videos fit within the container */
-            height: auto;
-            border-radius: 8px; /* Optional: Add rounded corners */
+            align-items: center;
         }
 
-        .carousel-item img {
-            width: 100%;
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .carousel-item video {
+            max-width: 100%;
             height: auto;
+            border-radius: 8px;
         }
 
         .carousel-controls {
             position: absolute;
-            top: 50%; /* Place controls in the middle */
+            top: 50%;
             transform: translateY(-50%);
             width: 100%;
             display: flex;
@@ -73,10 +73,14 @@
         }
 
         .carousel-controls button {
-            pointer-events: all; /* Enable interaction */
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
         }
 
-        .bio {
+         .bio {
             margin: 40px 0;
             font-size: 1.2rem;
             color: #bbb;
