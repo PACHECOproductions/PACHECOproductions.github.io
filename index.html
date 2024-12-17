@@ -32,13 +32,48 @@
             text-align: center;
         }
         
-         section h2 {
+        section h2 {
             margin-bottom: 5px;
         }
 
-         section h3 {
-             margin-bottom: 50px;
-         }
+        .carousel-section {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .carousel-section.photo-carousel h2 {
+            margin-bottom: 30px;
+        }
+        
+        .carousel-section.photo-carousel .carousel {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            margin: 10px auto;
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+        }
+
+        .carousel-section.video-carousel h2 {
+            margin-bottom: 30px;
+        }
+        
+        .carousel-section.video-carousel .carousel {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            margin: 10px auto;
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+        }
         
         .carousel {
             margin-top: 5px;
@@ -156,7 +191,7 @@
     </header>
 
     <!-- Video Carousel -->
-    <section>
+    <section class="carousel-section video-carousel">
         <h2>Video Gallery</h2>
         <div class="carousel">
             <div class="carousel-track">
@@ -196,8 +231,8 @@
     </section>
 
     <!-- Picture Carousel -->
-    <section>
-        <h3>Photo Gallery</h3>
+    <section class="carousel-section photo-carousel">
+        <h2>Photo Gallery</h2>
         <div class="carousel">
             <div class="carousel-track">
                 <div class="carousel-item">
