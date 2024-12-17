@@ -34,18 +34,27 @@
 
         .carousel {
             display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             overflow: hidden;
             position: relative;
-            margin: 20px 0;
+            margin: 20px auto; /* Center on the page */
+            width: 90%; /* Adjust the width as needed */
+            max-width: 800px; /* Optional: Limit the max width */
+            height: auto; /* Allow dynamic height */
         }
 
         .carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            align-items: center; /* Align videos vertically */
         }
-
-        .carousel-item {
-            min-width: 100%;
+        
+        .carousel-item video {
+            display: block;
+            max-width: 100%; /* Ensure videos fit within the container */
+            height: auto;
+            border-radius: 8px; /* Optional: Add rounded corners */
         }
 
         .carousel-item img {
@@ -55,18 +64,16 @@
 
         .carousel-controls {
             position: absolute;
-            top: 50%;
+            top: 50%; /* Place controls in the middle */
+            transform: translateY(-50%);
             width: 100%;
             display: flex;
             justify-content: space-between;
-            transform: translateY(-50%);
+            pointer-events: none;
         }
 
         .carousel-controls button {
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            padding: 10px;
-            cursor: pointer;
+            pointer-events: all; /* Enable interaction */
         }
 
         .bio {
