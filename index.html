@@ -367,7 +367,7 @@
                 isDragging = false;
                 const endX = e.changedTouches[0].clientX;
                 const deltaX = endX - startX;
-                const threshold = track.offsetWidth / 4;
+                const threshold = track.offsetWidth / 5;
                 
                 if (deltaX > threshold) {
                     pauseAllVideos();
