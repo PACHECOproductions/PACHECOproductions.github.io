@@ -371,10 +371,10 @@
                 
                 if (deltaX > threshold) {
                     pauseAllVideos();
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : 0;
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length -1;
                 } else if (deltaX < -threshold) {
                     pauseAllVideos();
-                    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : items.length - 1;
+                    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 }
                 
                 updateCarousel();
