@@ -318,25 +318,56 @@
             const nextButton = carousel.querySelector('.next');
 
             let currentIndex = 0;
+            let startX = 0;
+            let currentTranslate = 0;
 
             const updateCarousel = () => {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            };
+
+            const pauseAllVideos = () => {
                 items.forEach(item => {
                     const video = item.querySelector('video');
                     if (video) video.pause();
                 });
-                
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
             };
-
+                
             prevButton.addEventListener('click', () => {
+                pauseAllVideos();
                 currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
                 updateCarousel();
             });
 
             nextButton.addEventListener('click', () => {
+                pauseAllVideos();
                 currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 updateCarousel();
             });
+
+            track.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                currentTranslate = -currentIndex * track.offsetWidth;
+            });
+
+            track.addEventListener('touchmove', e => {
+                const touchX = e.touches[0].clientX;
+                const deltaX = touchX - startX;
+                track.style.transform = `translateX(${currentTranslate + deltaX}px)`;
+            });
+
+            track.addEventListener('touchend', e => {
+                const endX = e.changedTouched[0].clientX;
+                const deltaX = endX - startX;
+                if (deltaX > 50) {
+                    pauseAllVideos();
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+                } else if (deltaX < -50) {
+                    pauseAllVideos();
+                    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                }
+                updateCarousel();
+            });
+                
         });
     </script>
 </body>
