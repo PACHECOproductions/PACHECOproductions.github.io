@@ -352,22 +352,27 @@
             track.addEventListener('touchmove', e => {
                 const touchX = e.touches[0].clientX;
                 const deltaX = touchX - startX;
-                track.style.transform = `translateX(${currentTranslate + deltaX}px)`;
+                const newTranslate = currentTranslate + deltaX;
+
+                if (newTranslate <= 0 && newTranslate >= -((items.length -1) * track.offsetWidth)) {
+                    track.style.transform = `translateX(${newTranslate}px)`;
             });
 
             track.addEventListener('touchend', e => {
                 const endX = e.changedTouched[0].clientX;
                 const deltaX = endX - startX;
-                if (deltaX > 50) {
-                    pauseAllVideos();
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
-                } else if (deltaX < -50) {
-                    pauseAllVideos();
-                    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
-                }
-                updateCarousel();
-            });
+                const threshold = track.offsetWidth / 4;
                 
+                if (deltaX > threshold) {
+                    pauseAllVideos();
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : 0;
+                } else if (deltaX < -threshold) {
+                    pauseAllVideos();
+                    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : items.length - 1;
+                }
+                
+                updateCarousel();
+            });   
         });
     </script>
 </body>
