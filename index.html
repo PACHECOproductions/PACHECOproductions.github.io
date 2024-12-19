@@ -67,7 +67,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            margin: 1px 1px;
+            margin: 1px auto;
             width: 90%;
             max-width: 800px;
             height: auto;
@@ -320,6 +320,11 @@
             let currentIndex = 0;
 
             const updateCarousel = () => {
+                items.forEach(item => {
+                    const video = item.querySelector('video');
+                    if (video) video.pause();
+                });
+                
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             };
 
