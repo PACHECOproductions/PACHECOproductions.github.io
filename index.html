@@ -319,12 +319,12 @@
 
             let currentIndex = 0;
             let startX = 0;
-            let isDragging = false;
             let currentTranslate = 0;
-            let prevTranslate = 0;
+            let isDragging = false;
 
             const updateCarousel = () => {
-                track.style.transition = 'transform 0.5s ease-in-out';
+                // Smoothly move to the selected photo
+                track.style.transition = 'transform 0.3s ease-in-out';
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             };
 
@@ -334,7 +334,7 @@
                     if (video) video.pause();
                 });
             };
-                
+    
             prevButton.addEventListener('click', () => {
                 pauseAllVideos();
                 currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
@@ -347,41 +347,49 @@
                 updateCarousel();
             });
 
+            // Swipe functionality
             carousel.addEventListener('touchstart', e => {
                 startX = e.touches[0].clientX;
+                currentTranslate = -currentIndex * track.offsetWidth;
                 isDragging = true;
                 track.style.transition = 'none';
-                prevTranslate = currentTranslate;
             });
 
             carousel.addEventListener('touchmove', e => {
                 if (!isDragging) return;
-                
                 const touchX = e.touches[0].clientX;
                 const deltaX = touchX - startX;
-                currentTranslate = prevTranslate + deltaX;
+                const newTranslate = currentTranslate + deltaX;
 
-                track.style.transform = `translateX(${currentTranslate}px)`;
+                track.style.transform = `translateX(${newTranslate}px)`;
             });
 
             carousel.addEventListener('touchend', e => {
                 if (!isDragging) return;
                 isDragging = false;
-                
                 const endX = e.changedTouches[0].clientX;
                 const deltaX = endX - startX;
-                const threshold = carousel.offsetWidth / 4;
-                
+                const threshold = track.offsetWidth / 4; // Swipe threshold
+
                 if (deltaX > threshold) {
                     pauseAllVideos();
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length -1;
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
                 } else if (deltaX < -threshold) {
                     pauseAllVideos();
                     currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 }
-                
+
                 updateCarousel();
             });
+
+            // Infinite looping support
+            const setInitialPosition = () => {
+                track.style.transition = 'none';
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            };
+
+            // Initial setup
+            setInitialPosition();
         });
     </script>
 </body>
