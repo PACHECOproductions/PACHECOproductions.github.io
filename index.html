@@ -320,8 +320,10 @@
             let currentIndex = 0;
             let startX = 0;
             let currentTranslate = 0;
+            let isDragging = false;
 
             const updateCarousel = () => {
+                track.style.transition = 'transform 0.5s ease-in-out';
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             };
 
@@ -347,19 +349,23 @@
             track.addEventListener('touchstart', e => {
                 startX = e.touches[0].clientX;
                 currentTranslate = -currentIndex * track.offsetWidth;
+                isDragging = true;
+                track.style.transition = 'none';
             });
 
             track.addEventListener('touchmove', e => {
+                if (!isDragging) return;
                 const touchX = e.touches[0].clientX;
                 const deltaX = touchX - startX;
                 const newTranslate = currentTranslate + deltaX;
 
-                if (newTranslate <= 0 && newTranslate >= -((items.length -1) * track.offsetWidth)) {
-                    track.style.transform = `translateX(${newTranslate}px)`;
+                track.style.transform = `translateX(${newTranslate}px)`;
             });
 
             track.addEventListener('touchend', e => {
-                const endX = e.changedTouched[0].clientX;
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = e.changedTouches[0].clientX;
                 const deltaX = endX - startX;
                 const threshold = track.offsetWidth / 4;
                 
