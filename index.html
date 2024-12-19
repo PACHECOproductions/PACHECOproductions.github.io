@@ -320,6 +320,8 @@
             let currentIndex = 0;
             let startX = 0;
             let isDragging = false;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
 
             const updateCarousel = () => {
                 track.style.transition = 'transform 0.5s ease-in-out';
@@ -345,23 +347,24 @@
                 updateCarousel();
             });
 
-            track.addEventListener('touchstart', e => {
+            carousel.addEventListener('touchstart', e => {
                 startX = e.touches[0].clientX;
                 isDragging = true;
                 track.style.transition = 'none';
+                prevTranslate = currentTranslate;
             });
 
-            track.addEventListener('touchmove', e => {
+            carousel.addEventListener('touchmove', e => {
                 if (!isDragging) return;
                 
                 const touchX = e.touches[0].clientX;
                 const deltaX = touchX - startX;
-                const trackWidth = track.offsetWidth;
+                currentTranslate = prevTranslate + deltaX;
 
-                track.style.transform = `translateX(${deltaX - currentIndex + trackWidth}px)`;
+                track.style.transform = `translateX(${currentTranslate}px)`;
             });
 
-            track.addEventListener('touchend', e => {
+            carousel.addEventListener('touchend', e => {
                 if (!isDragging) return;
                 isDragging = false;
                 
@@ -378,18 +381,6 @@
                 }
                 
                 updateCarousel();
-            });
-
-            track.addEventListener('transitioned', () => {
-                if (currentIndex === items.length) {
-                    track.style.transition = 'none';
-                    currentIndex = 0;
-                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-                } else if (currentIndex < 0) {
-                    track.style.transition = 'none';
-                    currentIndex = items.length - 1;
-                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-                }
             });
         });
     </script>
