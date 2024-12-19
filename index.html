@@ -320,11 +320,6 @@
             let currentIndex = 0;
 
             const updateCarousel = () => {
-                items.forEach(item => {
-                    const video = item.querySelection('video');
-                    if (video) video.pause();
-                });
-                
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             };
 
